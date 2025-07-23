@@ -1,5 +1,6 @@
 
 'use client'
+import { registerUser } from '@/app/actions/authActions';
 import { registerSchema, RegisterSchema } from '@/lib/schemas/registerSchema';
 import { Card, CardHeader, CardBody, Input, Button } from '@heroui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,10 +14,11 @@ export default function LoginForm() {
         mode:'onTouched',
     });
 
-    const onSubmit = (data: RegisterSchema) => {
-        console.log(data)
+    const onSubmit = async (data: RegisterSchema) => {
+        const result = await registerUser(data);
+        console.log (result);
     }
-  return (
+return (
     <Card className='w-2/5 mx-auto'>
         <CardHeader className='flex flex-col items-center justify-center'>
             <div className='flex flex-col items-center text-secondary'>
@@ -30,7 +32,7 @@ export default function LoginForm() {
         <CardBody>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='spacy-y-4'>
-                      <Input
+                    <Input
                         defaultValue=''
                         label='Name'
                         variant='bordered'
@@ -64,5 +66,5 @@ export default function LoginForm() {
             </form>
         </CardBody>
     </Card>
-  )
+)
 }
